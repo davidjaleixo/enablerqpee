@@ -1,0 +1,23 @@
+#made by Thrinisha Mohandas @ KBZ thrinisha.mohandas@knowledgebiz.pt
+
+version: '3.3'
+services:
+    qpeenabler:
+        restart: always
+        build: .
+        ports:
+            - "3919:3000"
+        depends_on:
+            - mysqlservice
+    mysqlservice:
+        image: mysql:5.7
+        restart: always
+        environment:
+            MYSQL_DATABASE: qpee
+            MYSQL_USER: qpee
+            MYSQL_PASSWORD: awesomepassword
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_ALLOW_EMPTY_PASSWORD: "no"
+        volumes:
+            - ./dbdata:/var/lib/mysql
+            - ./DB:/docker-entrypoint-initdb.d

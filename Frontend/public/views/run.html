@@ -1,0 +1,129 @@
+<!-- made by Thrinisha Mohandas @ KBZ thrinisha.mohandas@knowledgebiz.pt -->
+
+<div class="container">
+	<h3>{{SubjectName}}/{{CollectionName}}</h3>
+	<br>
+	<h2>List of Requests</h2>
+	<br>
+	<br>
+	<div class="alert alert-danger" ng-if="data">
+		<strong>{{noData}}</strong>
+	</div>
+	<div class="pull-right">
+		<button class="btn btn-primary" type="button" value="Send" ng-if="!data" ng-click="run()">RUN</button>
+	</div>
+	<button class="btn btn-xs btn-success" type="button" data-toggle="modal" data-target="#myModal1"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>NEW ACTIVITY
+	</button>
+	<table class="table" ng-if="!data">
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>Request #</th>
+				<th>Method</th>
+				<th>Amount of</th>
+				<th>Results</th>
+				<th>Activity Actions</th>
+				<th>History</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="a in activity">
+				<td>{{a.activityID}}</td>
+				<td>{{a.requestID}}</td>
+				<td><span class="label label-default">{{a.method}}</span></td>
+				<td>{{a.count}}</td>
+				<td>
+					<div ng-if="a.result == 'Success'">
+						<span class="label label-success">{{a.result}}</span>
+					</div>
+					<div ng-if="a.result == 'Failed'">
+						<span class="label label-danger">{{a.result}}</span>
+					</div>
+					<div ng-if="a.result == 'Not Apply'">
+						<span class="label label-primary">{{a.result}}</span>
+					</div>
+				</td>
+				<td>
+					<button class="btn btn-warning btn-sm" type="button" ng-click="dataEditModal(a.activityID, a.count, a.requestID)" data-toggle="modal" data-target="#myModal2">Edit
+					</button>
+					<button class="btn btn-danger btn-sm" ng-click="delete(a.activityID)">Delete</button>
+				</td>
+				<td>
+					<button class="btn btn-primary btn-sm" ng-click="history(a.activityID)">View</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+<!-- Modal HTML (New Request) -->
+<div id="myModal1" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">New Activity</h4>
+			</div>
+			<br>
+			<div class="alert alert-warning" ng-if="msgData">
+				<strong>{{msg}}</strong>
+			</div>
+			<form>
+				<div class="modal-body">
+					<div class="form-group row has-danger">
+						<label class="col-sm-2 col-form-label">Request</label>
+						<div class="col-sm-5">
+							<select ng-model="request" ng-init="request='r.requestID'">
+								<option ng-repeat="r in requests" value="{{r.requestID}}">{{r.requestID}}</option>
+							</select>
+							<div ng-if="successRequest == 1"><font color="green">Success! You've done it.</font></div>
+							<div ng-if="successRequest == 2"><font color="red">Fail! Cannot be null</font></div>
+						</div>
+					</div>
+					<div class="form-group row has-danger">
+						<label class="col-sm-2 col-form-label">Count</label>
+						<div class="col-sm-5">
+							<input type="number" class="form-control form-control-danger" ng-model="count" min="1" ng-init="count=1">
+							<div ng-if="successCount == 1"><font color="green">Success! You've done it.</font></div>
+							<div ng-if="successCount == 2"><font color="red">Fail! Cannot be null</font></div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					<button class="btn btn-primary" type="button" value="Send" ng-click="postdataNewActivity(request, count)">Create</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<!-- Modal HTML (Edit Activity) -->
+<div id="myModal2" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">Edit Activity for Request: {{requestID}}</h4>
+			</div>
+			<br>
+			<div class="alert alert-warning" ng-if="msgDataEdit">
+				<strong>{{msgEdit}}</strong>
+			</div>
+			<form>
+				<div class="modal-body">
+					<div class="form-group row has-danger">
+						<label class="col-sm-2 col-form-label">Count</label>
+						<div class="col-sm-5">
+							<input type="number" class="form-control form-control-danger" ng-model="countEdit" min="0">
+							<div ng-if="successCountEdit == 1"><font color="green">Success! You've done it.</font></div>
+							<div ng-if="successCountEdit == 2"><font color="red">Fail! Cannot be null</font></div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					<button class="btn btn-primary" type="button" value="Send" ng-click="postdataEditActivity(activityID, countEdit)">Save Changes</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

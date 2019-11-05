@@ -1,0 +1,26 @@
+{
+  "name": "qpeeenabler",
+  "version": "1.0.0",
+  "description": "Qpee Enabler VF-OS",
+  "scripts": {
+    "start": "node Backend/server.js",
+    "test": "mocha --reporter mochawesome"
+  },
+  "author": "Thrinisha Mohandas @KBZ",
+  "license": "ISC",
+  "dependencies": {
+    "angular": "^1.7.2",
+    "angular-ui-bootstrap": "^2.5.6",
+    "body-parser": "^1.18.2",
+    "bootstrap": "^4.1.2",
+    "chai": "^4.2.0",
+    "express": "^4.16.3",
+    "is-json": "^2.0.1",
+    "method-override": "^2.3.10",
+    "mocha": "^5.2.0",
+    "mochawesome": "^3.0.3",
+    "mysql": "^2.15.0",
+    "request": "^2.88.0",
+    "winston": "^2.4.3"
+  }
+}

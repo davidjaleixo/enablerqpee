@@ -1,0 +1,146 @@
+<!-- made by Thrinisha Mohandas @ KBZ thrinisha.mohandas@knowledgebiz.pt -->
+
+<div class="container">
+	<h3>{{SubjectName}}</h3>
+	<br>
+	<h2>List of Collections</h2>
+	<br>
+	<br>
+	<div class="alert alert-danger" ng-if="data">
+		<strong>{{noData}}</strong>
+	</div>
+	<div class="pull-right">
+		<button class="btn btn-xs btn-success" type="button" data-toggle="modal" data-target="#myModal1"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>NEW
+		</button>
+		<button class="btn btn-xs btn-primary" type="button" data-toggle="modal" data-target="#myModal2">EDIT
+		</button>
+	</div>
+	<table class="table" ng-if="!data">
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>Name</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="c in collections">
+				<td>{{c.collectionsID}}</td>
+				<td>{{c.name}}</td>
+				<td>
+					<button class="btn btn-primary btn-sm" type="button" ng-click="dataModal(c.name, c.collectionsID)" data-toggle="modal" data-target="#myModal3">Edit
+					</button>
+					<button class="btn btn-danger btn-sm" ng-click="delete(c.collectionsID)">Delete</button>
+					<button class="btn btn-warning btn-sm" ng-click="manage(c.name)">Manage</button>
+					<button class="btn btn-primary btn-sm" ng-click="run(c.name)">Run</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+<!-- Modal HTML (New Collection) -->
+<div id="myModal1" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">New Collection</h4>
+			</div>
+			<br>
+			<div class="alert alert-warning" ng-if="msgData">
+				<strong>{{msg}}</strong>
+			</div>
+			<form>
+				<div class="modal-body">
+					<div class="form-group row has-danger">
+						<label class="col-sm-2 col-form-label">TOOL</label>
+						<div class="col-sm-5">
+							<input type="text" class="form-control form-control-danger" ng-model="subject_Name" disabled>
+						</div>
+					</div>
+					<div class="form-group row has-danger">
+						<label class="col-sm-2 col-form-label">NAME</label>
+						<div class="col-sm-5">
+							<input type="text" class="form-control form-control-danger" ng-model="nameNewCollection" placeholder="Enter Name">
+							<div ng-if="successnameNewCollection == 1"><font color="green">Success! You've done it.</font></div>
+							<div ng-if="successnameNewCollection == 2"><font color="red">Fail! Cannot be null</font></div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					<button class="btn btn-primary" type="button" value="Send" ng-click="postdataNewCollection(nameNewCollection)">Create</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<!-- Modal HTML (Edit Subject) -->
+<div id="myModal2" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">{{SubjectName}}</h4>
+			</div>
+			<br>
+			<div class="alert alert-warning" ng-if="msgDataEdit">
+				<strong>{{msgEdit}}</strong>
+			</div>
+			<form>
+				<div class="modal-body">
+					<div class="form-group row has-danger">
+						<label class="col-sm-2 col-form-label">NAME</label>
+						<div class="col-sm-5">
+							<input type="text" class="form-control form-control-danger" ng-model="name" placeholder="Enter Name">
+							<div ng-if="successNameEdit == 1"><font color="green">Success! You've done it.</font></div>
+							<div ng-if="successNameEdit == 2"><font color="red">Fail! Cannot be null</font></div>
+						</div>
+					</div>
+					<div class="form-group row has-danger">
+						<label class="col-sm-2 col-form-label">DESCRIPTION</label>
+						<div class="col-sm-5">
+							<input type="text" class="form-control form-control-danger" ng-model="description" placeholder="Enter Description">
+							<div ng-if="successDescriptionEdit == 1"><font color="green">Success! You've done it.</font></div>
+							<div ng-if="successDescriptionEdit == 2"><font color="red">Fail! Cannot be null</font></div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					<button  type="button" class="btn btn-primary" value="Send" ng-click="postdataEditSubject(name, description)">Save Changes</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<!-- Modal HTML (Edit Collection) -->
+<div id="myModal3" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">Edit {{nameModal}}</h4>
+			</div>
+			<br>
+			<div class="alert alert-warning" ng-if="msgDataEditCollection">
+				<strong>{{msgEditCollection}}</strong>
+			</div>
+			<form>
+				<div class="modal-body">
+					<div class="form-group row has-danger">
+						<label class="col-sm-2 col-form-label">NAME</label>
+						<div class="col-sm-5">
+							<input type="text" class="form-control form-control-danger" ng-model="nameEditCollection" placeholder="Enter Name">
+							<div ng-if="successNameEditCollection == 1"><font color="green">Success! You've done it.</font></div>
+							<div ng-if="successNameEditCollection == 2"><font color="red">Fail! Cannot be null</font></div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					<button class="btn btn-primary" type="button" value="Send" ng-click="postdataEditCollection(collectionsID, nameEditCollection)">Save Changes</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

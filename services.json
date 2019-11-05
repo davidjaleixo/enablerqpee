@@ -1,0 +1,624 @@
+{
+	"name": "createSubject",
+	"description": "Use this API call whenever is needed to create a new subject.",
+	"isSemanticUrl": "true",
+	"url": "/api/vf-os-enabler/subject/create/",
+	"urlSchema": {
+		"type": "object"
+	},
+	"method": "POST",
+	"bodySchema": {
+		"type": "object",
+		"properties": {
+			"name": {
+				"type": "string"
+			},
+			"description": {
+				"type": "string"
+			},
+			"userID": {
+				"type": "string"
+			}
+		},
+		"required": ["name", "description", "userID"],
+		"additionalProperties": false
+	},
+	"outputs": {
+		"type": "object",
+		"items": {
+			"type": "object",
+			"properties": {
+				"Result": {
+					"type": "boolean"
+				},
+				"Reason": {
+					"type": "string"
+				}
+			},
+			"required": ["Result", "Reason"]
+		},
+		"uniqueItems": true
+	}
+},
+{
+	"name": "createCollection",
+	"description": "Use this API call whenever is needed to create a new collection.",
+	"isSemanticUrl": "true",
+	"url": "/api/vf-os-enabler/collection/create/",
+	"urlSchema": {
+		"type": "object"
+	},
+	"method": "POST",
+	"bodySchema": {
+		"type": "object",
+		"properties": {
+			"name": {
+				"type": "string"
+			},
+			"subjectsID": {
+				"type": "number"
+			}
+		},
+		"required": ["name", "subjectsID"],
+		"additionalProperties": false
+	},
+	"outputs": {
+		"type": "object",
+		"items": {
+			"type": "object",
+			"properties": {
+				"Result": {
+					"type": "boolean"
+				},
+				"Reason": {
+					"type": "string"
+				}
+			},
+			"required": ["Result", "Reason"]
+		},
+		"uniqueItems": true
+	}
+},
+{
+	"name": "createRequest",
+	"description": "Use this API call whenever is needed to create a new request.",
+	"isSemanticUrl": "true",
+	"url": "/api/vf-os-enabler/request/create/",
+	"urlSchema": {
+		"type": "object"
+	},
+	"method": "POST",
+	"bodySchema": {
+		"type": "object",
+		"properties": {
+			"collectionid": {
+				"type": "number"
+			},
+			"url": {
+				"type": "string"
+			},
+			"method": {
+				"type": "string"
+			},
+			"raw": {
+				"type": "string"
+			},
+			"payload": {
+				"type": "string"
+			}
+		},
+		"required": ["collectionid", "url", "method", "raw", "payload"],
+		"additionalProperties": false
+	},
+	"outputs": {
+		"type": "object",
+		"items": {
+			"type": "object",
+			"properties": {
+				"Result": {
+					"type": "boolean"
+				},
+				"Reason": {
+					"type": "string"
+				}
+			},
+			"required": ["Result", "Reason"]
+		},
+		"uniqueItems": true
+	}
+},
+{
+	"name": "createConditions",
+	"description": "Use this API call whenever is needed to create a new request conditions.",
+	"isSemanticUrl": "true",
+	"url": "/api/vf-os-enabler/condition/create/",
+	"urlSchema": {
+		"type": "object"
+	},
+	"method": "POST",
+	"bodySchema": {
+		"type": "object",
+		"properties": {
+			"description": {
+				"type": "string"
+			},
+			"keySubject": {
+				"type": "string"
+			},
+			"keyCondition": {
+				"type": "string"
+			},
+			"value": {
+				"type": "string"
+			},
+			"requestID": {
+				"type": "number"
+			}
+		},
+		"required": ["description", "keySubject", "keyCondition", "value", "requestID"],
+		"additionalProperties": false
+	},
+	"outputs": {
+		"type": "object",
+		"items": {
+			"type": "object",
+			"properties": {
+				"Result": {
+					"type": "boolean"
+				},
+				"Reason": {
+					"type": "string"
+				}
+			},
+			"required": ["Result", "Reason"]
+		},
+		"uniqueItems": true
+	}
+},
+{
+	"name": "createActivity",
+	"description": "Use this API call whenever is needed to create a new activity.",
+	"isSemanticUrl": "true",
+	"url": "/api/vf-os-enabler/activity/create/",
+	"urlSchema": {
+		"type": "object"
+	},
+	"method": "POST",
+	"bodySchema": {
+		"type": "object",
+		"properties": {
+			"count": {
+				"type": "number"
+			},
+			"requestID": {
+				"type": "number"
+			}
+		},
+		"required": ["count", "requestID"],
+		"additionalProperties": false
+	},
+	"outputs": {
+		"type": "object",
+		"items": {
+			"type": "object",
+			"properties": {
+				"Result": {
+					"type": "boolean"
+				},
+				"Reason": {
+					"type": "string"
+				}
+			},
+			"required": ["Result", "Reason"]
+		},
+		"uniqueItems": true
+	}
+},
+{
+	"name": "createPerformanceTest",
+	"description": "Use this API call whenever is needed to run performance test.",
+	"isSemanticUrl": "true",
+	"url": "/api/vf-os-enabler/performance/:userid/:subjectname/:collectionsname",
+	"urlSchema": {
+		"type": "object",
+		"properties": {
+			"userid": {
+				"type": "string"
+			},
+			"subjectname": {
+				"type": "string"
+			},
+			"collectionsname": {
+				"type": "string"
+			}
+		},
+		"required": ["userid", "subjectname", "collectionsname"]
+	},
+	"method": "POST",
+	"bodySchema": {
+		"additionalProperties": false
+	},
+	"outputs": {
+		"type": "object",
+		"items": {
+			"type": "object",
+			"properties": {
+				"Result": {
+					"type": "boolean"
+				},
+				"Reason": {
+					"type": "string"
+				}
+			},
+			"required": ["Result", "Reason"]
+		},
+		"uniqueItems": true
+	}
+},
+{
+	"name": "getSubject",
+	"description": "Use this API call whenever is needed to retrieve all subjects related to User.",
+	"isSemanticUrl": "true",
+	"url": "/api/vf-os-enabler/subject/get/:userid",
+	"urlSchema": {
+		"type": "object",
+		"properties": {
+			"userid": {
+				"type": "string"
+			}
+		},
+		"required": ["userid"]
+	},
+	"method": "GET",
+	"outputs": {
+		"type": "object",
+		"items": {
+			"type": "object",
+			"properties": {
+				"Result": {
+					"type": "boolean"
+				},
+				"data": {
+					"type": "array"
+				}
+			},
+			"required": ["Result", "data"]
+		},
+		"uniqueItems": true
+	}
+},
+{
+	"name": "getCollections",
+	"description": "Use this API call whenever is needed to retrieve all collections related to Subject.",
+	"isSemanticUrl": "true",
+	"url": "/api/vf-os-enabler/collection/get/:userid/:subjectname",
+	"urlSchema": {
+		"type": "object",
+		"properties": {
+			"userid": {
+				"type": "string"
+			},
+			"subjectname": {
+				"type": "string"
+			}
+		},
+		"required": ["userid", "subjectname"]
+	},
+	"method": "GET",
+	"outputs": {
+		"type": "object",
+		"items": {
+			"type": "object",
+			"properties": {
+				"Result": {
+					"type": "boolean"
+				},
+				"data": {
+					"type": "array"
+				}
+			},
+			"required": ["Result", "data"]
+		},
+		"uniqueItems": true
+	}
+},
+{
+	"name": "getRequest",
+	"description": "Use this API call whenever is needed to retrieve all requests related to User, Subject and Collection.",
+	"isSemanticUrl": "true",
+	"url": "/api/vf-os-enabler/request/get/:userid/:subjectname/:collectionsname",
+	"urlSchema": {
+		"type": "object",
+		"properties": {
+			"userid": {
+				"type": "string"
+			},
+			"subjectname": {
+				"type": "string"
+			},
+			"collectionsname": {
+				"type": "string"
+			}
+		},
+		"required": ["userid", "subjectname", "collectionsname"]
+	},
+	"method": "GET",
+	"outputs": {
+		"type": "object",
+		"items": {
+			"type": "object",
+			"properties": {
+				"Result": {
+					"type": "boolean"
+				},
+				"data": {
+					"type": "array"
+				}
+			},
+			"required": ["Result", "data"]
+		},
+		"uniqueItems": true
+	}
+},
+{
+	"name": "getConditions",
+	"description": "Use this API call whenever is needed to retrieve all requestconditions related to Request.",
+	"isSemanticUrl": "true",
+	"url": "/api/vf-os-enabler/condition/get/:requestid",
+	"urlSchema": {
+		"type": "object",
+		"properties": {
+			"requestid": {
+				"type": "number"
+			}
+		},
+		"required": ["requestid"]
+	},
+	"method": "GET",
+	"outputs": {
+		"type": "object",
+		"items": {
+			"type": "object",
+			"properties": {
+				"Result": {
+					"type": "boolean"
+				},
+				"data": {
+					"type": "array"
+				}
+			},
+			"required": ["Result", "data"]
+		},
+		"uniqueItems": true
+	}
+},
+{
+	"name": "getActivity",
+	"description": "Use this API call whenever is needed to retrieve all activity related to User, Subject and Collection.",
+	"isSemanticUrl": "true",
+	"url": "/api/vf-os-enabler/activity/get/:userid/:subjectname/:collectionsname",
+	"urlSchema": {
+		"type": "object",
+		"properties": {
+			"userid": {
+				"type": "string"
+			},
+			"subjectname": {
+				"type": "string"
+			},
+			"collectionsname": {
+				"type": "string"
+			}
+		},
+		"required": ["userid", "subjectname", "collectionsname"]
+	},
+	"method": "GET",
+	"outputs": {
+		"type": "object",
+		"items": {
+			"type": "object",
+			"properties": {
+				"Result": {
+					"type": "boolean"
+				},
+				"data": {
+					"type": "array"
+				}
+			},
+			"required": ["Result", "data"]
+		},
+		"uniqueItems": true
+	}
+},
+{
+	"name": "getStatusList",
+	"description": "Use this API call whenever is needed to retrieve all statuslist related to Activity.",
+	"isSemanticUrl": "true",
+	"url": "/api/vf-os-enabler/statuslist/get/:activityid",
+	"urlSchema": {
+		"type": "object",
+		"properties": {
+			"activityid": {
+				"type": "number"
+			}
+		},
+		"required": ["activityid"]
+	},
+	"method": "GET",
+	"outputs": {
+		"type": "object",
+		"items": {
+			"type": "object",
+			"properties": {
+				"Result": {
+					"type": "boolean"
+				},
+				"data": {
+					"type": "array"
+				}
+			},
+			"required": ["Result", "data"]
+		},
+		"uniqueItems": true
+	}
+},
+{
+	"name": "deleteSubject",
+	"description": "Use this API call whenever is needed to delete Subject.",
+	"isSemanticUrl": "true",
+	"url": "/api/vf-os-enabler/subject/delete/:subjectid",
+	"urlSchema": {
+		"type": "object",
+		"properties": {
+			"subjectid": {
+				"type": "number"
+			}
+		},
+		"required": ["subjectid"]
+	},
+	"method": "DELETE",
+	"outputs": {
+		"type": "object",
+		"items": {
+			"type": "object",
+			"properties": {
+				"Result": {
+					"type": "boolean"
+				},
+				"Reason": {
+					"type": "string"
+				}
+			},
+			"required": ["Result", "Reason"]
+		},
+		"uniqueItems": true
+	}
+},
+{
+	"name": "deleteCollection",
+	"description": "Use this API call whenever is needed to delete Collection.",
+	"isSemanticUrl": "true",
+	"url": "/api/vf-os-enabler/collection/delete/:collectionsid",
+	"urlSchema": {
+		"type": "object",
+		"properties": {
+			"collectionsid": {
+				"type": "number"
+			}
+		},
+		"required": ["collectionsid"]
+	},
+	"method": "DELETE",
+	"outputs": {
+		"type": "object",
+		"items": {
+			"type": "object",
+			"properties": {
+				"Result": {
+					"type": "boolean"
+				},
+				"Reason": {
+					"type": "string"
+				}
+			},
+			"required": ["Result", "Reason"]
+		},
+		"uniqueItems": true
+	}
+},
+{
+	"name": "deleteRequest",
+	"description": "Use this API call whenever is needed to delete Request.",
+	"isSemanticUrl": "true",
+	"url": "/api/vf-os-enabler/request/delete/:requestid",
+	"urlSchema": {
+		"type": "object",
+		"properties": {
+			"requestid": {
+				"type": "number"
+			}
+		},
+		"required": ["requestid"]
+	},
+	"method": "DELETE",
+	"outputs": {
+		"type": "object",
+		"items": {
+			"type": "object",
+			"properties": {
+				"Result": {
+					"type": "boolean"
+				},
+				"Reason": {
+					"type": "string"
+				}
+			},
+			"required": ["Result", "Reason"]
+		},
+		"uniqueItems": true
+	}
+},
+{
+	"name": "deleteCondition",
+	"description": "Use this API call whenever is needed to delete Condition.",
+	"isSemanticUrl": "true",
+	"url": "/api/vf-os-enabler/condition/delete/:requestconditionsid",
+	"urlSchema": {
+		"type": "object",
+		"properties": {
+			"requestconditionsid": {
+				"type": "number"
+			}
+		},
+		"required": ["requestconditionsid"]
+	},
+	"method": "DELETE",
+	"outputs": {
+		"type": "object",
+		"items": {
+			"type": "object",
+			"properties": {
+				"Result": {
+					"type": "boolean"
+				},
+				"Reason": {
+					"type": "string"
+				}
+			},
+			"required": ["Result", "Reason"]
+		},
+		"uniqueItems": true
+	}
+},
+{
+	"name": "deleteActivity",
+	"description": "Use this API call whenever is needed to delete Activity.",
+	"isSemanticUrl": "true",
+	"url": "/api/vf-os-enabler/activity/delete/:activityid",
+	"urlSchema": {
+		"type": "object",
+		"properties": {
+			"activityid": {
+				"type": "number"
+			}
+		},
+		"required": ["activityid"]
+	},
+	"method": "DELETE",
+	"outputs": {
+		"type": "object",
+		"items": {
+			"type": "object",
+			"properties": {
+				"Result": {
+					"type": "boolean"
+				},
+				"Reason": {
+					"type": "string"
+				}
+			},
+			"required": ["Result", "Reason"]
+		},
+		"uniqueItems": true
+	}
+}

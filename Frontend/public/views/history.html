@@ -1,0 +1,60 @@
+<!-- made by Thrinisha Mohandas @ KBZ thrinisha.mohandas@knowledgebiz.pt -->
+
+<div class="container">
+	<h3>{{SubjectName}}/{{CollectionName}}/{{ActivityID}}/history</h3>
+	<br>
+	<h2>History of Activities</h2>
+	<br>
+	<br>
+	<div class="alert alert-danger" ng-if="data">
+		<strong>{{noData}}</strong>
+	</div>
+	<table class="table" ng-if="!data">
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>Date and Time</th>
+				<th>Description</th>
+				<th>Information</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="s in statuslist">
+				<td>{{s.statusListID}}</td>
+				<td>{{s.date}}</td>
+				<td>
+					<div ng-if="s.description == 'Success'">
+						<span class="label label-success">{{s.description}}</span>
+					</div>
+					<div ng-if="s.description == 'Failed'">
+						<span class="label label-danger">{{s.description}}</span>
+					</div>
+				</td>
+				<td>
+					<div ng-if="s.description == 'Success'">
+						<span class="label label-success">{{s.information}}</span>
+					</div>
+					<div ng-if="s.description == 'Failed'">
+						<span class="label label-danger">{{s.information}}</span>
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<table class="table" ng-if="!data">
+		<thead>
+			<tr>
+				<th>Total Requests</th>
+				<th>Total of Success Requests</th>
+				<th>Total of Failed Requests</th>
+				<th>Percentage of Total Success Requests</th>
+			</tr>
+		</thead>
+		<tbody>
+			<td>{{total}}</td>
+			<td>{{success}}</td>
+			<td>{{failed}}</td>
+			<td>{{percentage}} %</td>
+		</tbody>
+	</table>
+</div>

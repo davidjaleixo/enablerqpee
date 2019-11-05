@@ -1,0 +1,15 @@
+{
+	"Database":{
+		"DBUSER": "root",
+		"DBPASSWORD": "root",
+		"DATABASE": "qpee",
+		"DBCONLIMIT": 100,
+		"DBDEBUG": false
+	},
+	"Logger":{
+		"DEBUGLEVEL": "debug"
+	},
+	"Enabler":{
+		"PORT": 3000
+	}
+}

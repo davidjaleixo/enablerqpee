@@ -1,0 +1,170 @@
+<!-- made by Thrinisha Mohandas @ KBZ thrinisha.mohandas@knowledgebiz.pt -->
+
+<div class="container">
+	<h3>{{SubjectName}}/{{CollectionName}}/{{RequestName}}/conditions</h3>
+	<br>
+	<h2>Test Case</h2>
+	<br>
+	<br>
+	<div class="alert alert-danger" ng-if="data">
+		<strong>{{noData}}</strong>
+	</div>
+	<div class="pull-right">
+		<button class="btn btn-xs btn-success" type="button" data-toggle="modal" data-target="#myModal1"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>NEW
+		</button>
+	</div>
+	<table class="table" ng-if="!data">
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>Description</th>
+				<th>Key</th>
+				<th>Condition</th>
+				<th>Value</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="r in requestconditions">
+				<td>{{r.requestConditionsID}}</td>
+				<td>{{r.description}}</td>
+				<td>{{r.keySubject}}</td>
+				<td>{{r.keyCondition}}</td>
+				<td>{{r.value}}</td>
+				<td>
+					<button class="btn btn-warning btn-sm" type="button" ng-click="dataRequestConditionsModal(r.requestConditionsID, r.description, r.keySubject, r.keyCondition, r.value)" data-toggle="modal" data-target="#myModal2">Edit
+					</button>
+					<button class="btn btn-danger btn-sm" ng-click="delete(r.requestConditionsID)">Delete</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+<!-- Modal HTML (New Request) -->
+<div id="myModal1" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">New Condition for Request: {{requestID}}</h4>
+			</div>
+			<br>
+			<div class="alert alert-warning" ng-if="msgData">
+				<strong>{{msg}}</strong>
+			</div>
+			<form>
+				<div class="modal-body">
+					<div class="form-group row has-danger">
+						<label class="col-sm-2 col-form-label">Description</label>
+						<div class="col-sm-5">
+							<input type="text" class="form-control form-control-danger" ng-model="description" placeholder="Enter Description">
+							<div ng-if="successDescription == 1"><font color="green">Success! You've done it.</font></div>
+							<div ng-if="successDescription == 2"><font color="red">Fail! Cannot be null</font></div>
+						</div>
+					</div>
+					<div class="form-group row has-danger">
+						<label class="col-sm-2 col-form-label">Key</label>
+						<div class="col-sm-5">
+							<input type="text" class="form-control form-control-danger" ng-model="key" ng-init="key='StatusCode'" list="keyOptions">
+							<datalist id="keyOptions">
+								<option value="StatusCode">Status Code</option>
+								<option value="BodyLength">Body Length</option>
+								<option value="TimeResponse">Time Response(ms)</option>
+							</datalist>
+							<small class="form-text text-muted">There are three options: Status Code, Body Length and Time Response. You can select or write a custom Key</small>
+						</div>
+					</div>
+					<div class="form-group row has-danger">
+						<label class="col-sm-2 col-form-label">Condition</label>
+						<div class="col-sm-5">
+							<select class="form-control" ng-model="condition" ng-init="condition='=='">
+								<option value="==">Equal</option>
+								<option value=">">Bigger</option>
+								<option value=">=">Bigger and Equal</option>
+								<option value="<">Less</option>
+								<option value="<=">Less or Equal</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group row has-danger">
+						<label class="col-sm-2 col-form-label">Value</label>
+						<div class="col-sm-5">
+							<input type="text" class="form-control form-control-danger" ng-model="value" placeholder="Enter Value">
+							<div ng-if="successValue == 1"><font color="green">Success! You've done it.</font></div>
+							<div ng-if="successValue == 2"><font color="red">Fail! Cannot be null</font></div>
+							<div ng-if="successValue == 3"><font color="red">Fail! Value must be Number</font></div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					<button class="btn btn-primary" type="button" value="Send" ng-click="postdataNewRequestCondition(description, key, condition, value)">Create</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<!-- Modal HTML (Edit Request) -->
+<div id="myModal2" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">Edit Condition for Request: {{requestID}}</h4>
+			</div>
+			<br>
+			<div class="alert alert-warning" ng-if="msgDataEdit">
+				<strong>{{msgEdit}}</strong>
+			</div>
+			<form>
+				<div class="modal-body">
+					<div class="form-group row has-danger">
+						<label class="col-sm-2 col-form-label">Description</label>
+						<div class="col-sm-5">
+							<input type="text" class="form-control form-control-danger" ng-model="descriptionEdit">
+							<div ng-if="successDescriptionEdit == 1"><font color="green">Success! You've done it.</font></div>
+							<div ng-if="successDescriptionEdit == 2"><font color="red">Fail! Cannot be null</font></div>
+						</div>
+					</div>
+					<div class="form-group row has-danger">
+						<label class="col-sm-2 col-form-label">Key</label>
+						<div class="col-sm-5">
+							<input type="text" class="form-control form-control-danger" ng-model="keyEdit" list="keyOptions">
+							<datalist id="keyOptions">
+								<option value="StatusCode">Status Code</option>
+								<option value="BodyLength">Body Length</option>
+								<option value="TimeResponse">Time Response</option>
+							</datalist>
+							<small class="form-text text-muted">There are three options: Status Code, Body Length and Time Response. You can select or write a custom Key</small>
+						</div>
+					</div>
+					<div class="form-group row has-danger">
+						<label class="col-sm-2 col-form-label">Condition</label>
+						<div class="col-sm-5">
+							<select class="form-control" ng-model="conditionEdit">
+								<option value="==">Equal</option>
+								<option value=">">Bigger</option>
+								<option value=">=">Bigger and Equal</option>
+								<option value="<">Less</option>
+								<option value="<=">Less or Equal</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group row has-danger">
+						<label class="col-sm-2 col-form-label">Value</label>
+						<div class="col-sm-5">
+							<input type="text" class="form-control form-control-danger" ng-model="valueEdit">
+							<div ng-if="successValueEdit == 1"><font color="green">Success! You've done it.</font></div>
+							<div ng-if="successValueEdit == 2"><font color="red">Fail! Cannot be null</font></div>
+							<div ng-if="successValueEdit == 3"><font color="red">Fail! Value must be Number</font></div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					<button class="btn btn-primary" type="button" value="Send" ng-click="postdataEditRequestCondition(requestConditionsID, descriptionEdit, keyEdit, conditionEdit, valueEdit)">Save Changes</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

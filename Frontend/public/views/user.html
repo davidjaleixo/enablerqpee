@@ -1,0 +1,72 @@
+<!-- made by Thrinisha Mohandas @ KBZ thrinisha.mohandas@knowledgebiz.pt -->
+
+<div class="container">
+  <h3>Hello {{userID}}</h3>
+  <br>
+  <h2>List of your Tools</h2>
+  <br>
+  <br>
+  <div class="alert alert-danger" ng-if="data">
+    <strong>{{noData}}</strong>
+  </div>
+  <div class="pull-right">
+    <button class="btn btn-xs btn-success" type="button" data-toggle="modal" data-target="#myModal1"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>NEW
+    </button>
+  </div>
+  <br><br>
+  <div class= "col-lg-4" ng-if="!data" ng-repeat="s in subjects">
+    <!--Card-->
+    <div class="well" style="background-color:transparent;">
+      <div class="card">
+        <!--Card content-->
+        <div class="card-body">
+          <!--Title-->
+          <h4 class="card-title">{{s.name}}</h4>
+          <!--Text-->
+          <p class="card-text"><h5>{{s.description}}</h5></p>
+          <button class="btn btn-primary" type="button" value="Send" ng-click="postdata(s.name)">Manage</button>
+          <button class="btn btn-danger" ng-click="delete(s.subjectsID)">Delete</button>
+        </div>
+      </div>
+    </div>
+    <!--/.Card-->
+  </div>
+
+  <!-- Modal HTML (New Subject) -->
+  <div id="myModal1" class="modal fade">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">New Subject</h4>
+        </div>
+        <br>
+        <div class="alert alert-warning" ng-if="msgData">
+          <strong>{{msg}}</strong>
+        </div>
+        <form>
+          <div class="modal-body">
+            <div class="form-group row has-danger">
+              <label class="col-sm-2 col-form-label">NAME</label>
+              <div class="col-sm-5">
+                <input type="text" class="form-control form-control-danger" ng-model="name" placeholder="Enter Name">
+                <div ng-if="successNameNewSubject == 1"><font color="green">Success! You've done it.</font></div>
+                <div ng-if="successNameNewSubject == 2"><font color="red">Fail! Cannot be null</font></div>
+              </div>
+            </div>
+            <div class="form-group row has-danger">
+              <label class="col-sm-2 col-form-label">DESCRIPTION</label>
+              <div class="col-sm-5">
+                <input type="text" class="form-control form-control-danger" ng-model="description" placeholder="Enter Description">
+                <div ng-if="successDescriptionNewSubject == 1"><font color="green">Success! You've done it.</font></div>
+                <div ng-if="successDescriptionNewSubject == 2"><font color="red">Fail! Cannot be null</font></div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            <button class="btn btn-primary" type="button" value="Send" ng-click="postdataSubject(name, description)">Create</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>

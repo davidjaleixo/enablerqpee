@@ -1,0 +1,174 @@
+<!-- made by Thrinisha Mohandas @ KBZ thrinisha.mohandas@knowledgebiz.pt -->
+
+<div class="container">
+	<h3>{{SubjectName}}/{{CollectionName}}</h3>
+	<br>
+	<h2>List of Requests</h2>
+	<br>
+	<br>
+	<div class="alert alert-danger" ng-if="data">
+		<strong>{{noData}}</strong>
+	</div>
+	<div class="pull-right">
+		<button class="btn btn-xs btn-success" type="button" data-toggle="modal" data-target="#myModal1"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>NEW
+		</button>
+	</div>
+	<table class="table" ng-if="!data">
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>URL</th>
+				<th>Raw</th>
+				<th>Method</th>
+				<th>Payload</th>
+				<th>Test Case</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="r in request">
+				<td>{{r.requestID}}</td>
+				<td>{{r.url}}</td>
+				<td>{{r.raw}}</td>
+				<td><span class="label label-default">{{r.method}}</span></td>
+				<td>{{r.payload}}</td>
+				<td>
+					<button class="btn btn-primary btn-sm" ng-click="view(r.requestID)">View</button>
+				</td>
+				<td>
+					<button class="btn btn-warning btn-sm" type="button" ng-click="dataRequestModal(r.url, r.method, r.raw, r.payload, r.requestID)" data-toggle="modal" data-target="#myModal2">Edit
+					</button>
+					<button class="btn btn-danger btn-sm" ng-click="delete(r.requestID)">Delete</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+<!-- Modal HTML (New Request) -->
+<div id="myModal1" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">New Request for Collection: {{CollectionName}}</h4>
+			</div>
+			<br>
+			<div class="alert alert-warning" ng-if="msgData">
+				<strong>{{msg}}</strong>
+			</div>
+			<form>
+				<div class="modal-body">
+					<div class="form-group row has-danger">
+						<label class="col-sm-2 col-form-label">URL</label>
+						<div class="col-sm-5">
+							<input type="text" class="form-control form-control-danger" ng-model="url" placeholder="Enter Request URL">
+							<div ng-if="successURL == 1"><font color="green">Success! You've done it.</font></div>
+							<div ng-if="successURL == 2"><font color="red">Fail! Cannot be null</font></div>
+						</div>
+					</div>
+					<div class="form-group row has-danger">
+						<label class="col-sm-2 col-form-label">METHOD</label>
+						<div class="col-sm-5">
+							<select class="form-control" ng-model="method" ng-init="method='POST'">
+								<option value="POST">POST</option>
+								<option value="GET">GET</option>
+								<option value="PUT">PUT</option>
+								<option value="PATCH">PATCH</option>
+								<option value="DELETE">DELETE</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group row has-danger">
+						<label class="col-sm-2 col-form-label">RAW</label>
+						<div class="col-sm-5">
+							<select class="form-control" ng-model="raw" ng-init="raw='application/json'">
+								<option value="application/json">JSON(application/json)</option>
+								<option value="text/plain">Text(text/plain)</option>
+								<option value="application/javascript">Javascript(application/javascript)</option>
+								<option value="application/xml">XML(application/xml)</option>
+								<option value="text/xml">XML(text/xml)</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group row has-danger">
+						<label class="col-sm-2 col-form-label">Payload</label>
+						<div class="col-sm-5">
+							<textarea rows="10"class="form-control form-control-danger" ng-model="payload" placeholder="Enter Payload"></textarea>
+							<div ng-if="successPayload == 1"><font color="green">Success! You've done it.</font></div>
+							<div ng-if="successPayload == 2"><font color="red">Fail! Cannot be null</font></div>
+							<div ng-if="successPayload == 3"><font color="red">Fail! Not JSON format</font></div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					<button class="btn btn-primary" type="button" value="Send" ng-click="postdataNewRequest(url, method, raw, payload)">Create</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<!-- Modal HTML (Edit Request) -->
+<div id="myModal2" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">Edit Request for Collection: {{CollectionName}}</h4>
+			</div>
+			<br>
+			<div class="alert alert-warning" ng-if="msgDataEdit">
+				<strong>{{msgEdit}}</strong>
+			</div>
+			<form>
+				<div class="modal-body">
+					<div class="form-group row has-danger">
+						<label class="col-sm-2 col-form-label">URL</label>
+						<div class="col-sm-5">
+							<input type="text" class="form-control form-control-danger" ng-model="urlEdit" placeholder="Enter Request URL">
+							<div ng-if="successURLEdit == 1"><font color="green">Success! You've done it.</font></div>
+							<div ng-if="successURLEdit == 2"><font color="red">Fail! Cannot be null</font></div>
+						</div>
+					</div>
+					<div class="form-group row has-danger">
+						<label class="col-sm-2 col-form-label">METHOD</label>
+						<div class="col-sm-5">
+							<select class="form-control" ng-model="methodEdit">
+								<option value="POST">POST</option>
+								<option value="GET">GET</option>
+								<option value="PUT">PUT</option>
+								<option value="PATCH">PATCH</option>
+								<option value="DELETE">DELETE</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group row has-danger">
+						<label class="col-sm-2 col-form-label">RAW</label>
+						<div class="col-sm-5">
+							<select class="form-control" ng-model="rawEdit">
+								<option value="application/json">JSON(application/json)</option>
+								<option value="text/plain">Text(text/plain)</option>
+								<option value="application/javascript">Javascript(application/javascript)</option>
+								<option value="application/xml">XML(application/xml)</option>
+								<option value="text/xml">XML(text/xml)</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group row has-danger">
+						<label class="col-sm-2 col-form-label">Payload</label>
+						<div class="col-sm-5">
+							<textarea rows="10"class="form-control form-control-danger" ng-model="payloadEdit" placeholder="Enter Payload"></textarea>
+							<div ng-if="successPayloadEdit == 1"><font color="green">Success! You've done it.</font></div>
+							<div ng-if="successPayloadEdit == 2"><font color="red">Fail! Cannot be null</font></div>
+							<div ng-if="successPayloadEdit == 3"><font color="red">Fail! Not JSON format</font></div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					<button class="btn btn-primary" type="button" value="Send" ng-click="postdataEditRequest(urlEdit, methodEdit, rawEdit, payloadEdit, requestID)">Save Changes</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
